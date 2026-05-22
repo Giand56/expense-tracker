@@ -1,0 +1,88 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Instrument+Serif&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&family=Geist:wght@400;500;600&family=Geist+Mono:wght@400;500&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body {
+  margin: 0; padding: 0;
+  font-family: 'Inter', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+#root { width: 100vw; height: 100vh; overflow: hidden; }
+
+@keyframes sheet-up {
+  from { transform: translateY(100%); }
+  to   { transform: translateY(0); }
+}
+
+/* ── Design tokens ───────────────────────────────────── */
+.exp-app {
+  --font-ui:      'Inter', system-ui, sans-serif;
+  --font-display: 'Inter', system-ui, sans-serif;
+  --font-num:     'JetBrains Mono', ui-monospace, monospace;
+  --cat-l: 0.72; --cat-c: 0.09;
+
+  --bg:            oklch(0.99 0.003 100);
+  --surface:       oklch(1 0 0);
+  --surface-hover: oklch(0.96 0.005 100);
+  --ink-1:         oklch(0.22 0.01 260);
+  --ink-2:         oklch(0.45 0.01 260);
+  --ink-3:         oklch(0.62 0.005 260);
+  --line:          oklch(0.92 0.005 100);
+  --line-strong:   oklch(0.85 0.005 100);
+  --accent:        oklch(0.55 0.13 150);
+  --accent-ink:    oklch(0.99 0.003 100);
+  --accent-shadow: oklch(0.55 0.13 150 / 0.4);
+
+  --card-radius:  12px;
+  --card-pad:     20px;
+  --row-pad:      14px 16px;
+  --input-radius: 9px;
+  --input-pad:    10px 12px;
+  --btn-radius:   9px;
+  --chip-radius:  999px;
+  --stat-size:    22px;
+}
+
+.exp-app.t-dark {
+  --bg:            oklch(0.18 0.008 260);
+  --surface:       oklch(0.22 0.008 260);
+  --surface-hover: oklch(0.26 0.008 260);
+  --ink-1:         oklch(0.96 0.005 100);
+  --ink-2:         oklch(0.74 0.008 260);
+  --ink-3:         oklch(0.55 0.008 260);
+  --line:          oklch(0.30 0.008 260);
+  --line-strong:   oklch(0.40 0.008 260);
+  --cat-l: 0.66; --cat-c: 0.10;
+}
+
+/* Density */
+.exp-app.density-compact { --card-pad: 14px; --row-pad: 10px 14px; --stat-size: 20px; }
+.exp-app.density-comfy   { --card-pad: 28px; --row-pad: 18px 20px; --stat-size: 26px; }
+
+/* Radius */
+.exp-app.radius-sharp {
+  --card-radius: 4px; --input-radius: 4px; --btn-radius: 4px; --chip-radius: 4px;
+}
+.exp-app.radius-soft {
+  --card-radius: 18px; --input-radius: 14px; --btn-radius: 14px;
+}
+
+/* Font pairs */
+.exp-app.font-editorial {
+  --font-ui:      'IBM Plex Sans', system-ui, sans-serif;
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-num:     'IBM Plex Mono', ui-monospace, monospace;
+}
+.exp-app.font-geist {
+  --font-ui:      'Geist', system-ui, sans-serif;
+  --font-display: 'Geist', system-ui, sans-serif;
+  --font-num:     'Geist Mono', ui-monospace, monospace;
+}
+
+/* Input helpers */
+input[type=date]::-webkit-calendar-picker-indicator {
+  filter: invert(0.5); cursor: pointer; opacity: 0.6;
+}
+.t-dark input[type=date]::-webkit-calendar-picker-indicator { filter: invert(0.85); }
+::placeholder { color: var(--ink-3); opacity: 0.7; }
