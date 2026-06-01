@@ -1,11 +1,16 @@
+import os
+
+from dotenv import load_dotenv
 from sqlalchemy import create_engine, text
 from sqlalchemy.orm import sessionmaker
 
 from app.models.expense import Base
 
-DATABASE_URL = "sqlite:///./expenses.db"
+load_dotenv()
 
-engine = create_engine(DATABASE_URL, connect_args={"check_same_thread": False})
+DATABASE_URL = os.environ["DATABASE_URL"]
+
+engine = create_engine(DATABASE_URL)
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
@@ -23,11 +28,8 @@ def _migrate_add_user_id() -> None:
     """Add user_id column to pre-existing tables that predate auth."""
     with engine.connect() as conn:
         for table in ("expenses", "subscriptions"):
-            try:
-                conn.execute(text(f"ALTER TABLE {table} ADD COLUMN user_id INTEGER REFERENCES users(id)"))
-                conn.commit()
-            except Exception:
-                pass  # column already exists
+            conn.execute(text(f"ALTER TABLE {table} ADD COLUMN IF NOT EXISTS user_id INTEGER REFERENCES users(id)"))
+        conn.commit()
 
 
 def get_db():
