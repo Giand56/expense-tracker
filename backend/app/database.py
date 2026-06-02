@@ -10,7 +10,11 @@ load_dotenv()
 
 DATABASE_URL = os.environ["DATABASE_URL"]
 
-engine = create_engine(DATABASE_URL)
+# SQLAlchemy 2.x dropped support for the "postgres://" scheme that Render injects
+if DATABASE_URL.startswith("postgres://"):
+    DATABASE_URL = DATABASE_URL.replace("postgres://", "postgresql://", 1)
+
+engine = create_engine(DATABASE_URL, connect_args={"sslmode": "require"})
 
 SessionLocal = sessionmaker(autocommit=False, autoflush=False, bind=engine)
 
